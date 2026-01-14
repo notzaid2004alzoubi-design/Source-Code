@@ -208,7 +208,7 @@ void CCPPWM_init(void)
     T2CON  = 0x06;   // Timer2 ON, prescaler 1:16
 }
 
-// NOTE: we kept these names as-is so we don’t break anything
+// NOTE: we kept these names as-is so we donâ€™t break anything
 void motor_L(unsigned char speed){ CCPR1L = speed; }
 void motor_R(unsigned char speed){ CCPR2L = speed; }
 
@@ -658,7 +658,7 @@ void main()
         // ================= STAGE 5: PARKING =================
         while(stage == STAGE_PARKING){
 
-            // do entry sequence only once (we don’t want it repeating)
+            // do entry sequence only once (we donâ€™t want it repeating)
             if (!did_park_entry_turn) {
                 did_park_entry_turn = 1;
                 park_entry_sequence_once();
