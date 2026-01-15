@@ -28,9 +28,9 @@ unsigned int servo_i;                   // used in servo loop
 // TMR0 preload = 6 gives ~1ms overflow at 8MHz (this worked stable in testing)
 void timer0_init_1ms_int(void)
 {
-    OPTION_REG = 0xC2;
-    TMR0 = 6;
-    INTCON &= (unsigned char)~0x04;     // clear T0IF
+    OPTION_REG = 0xC2; //1:8 prescaler external clk freq is 8Mhz so internal clock is 2MHz tmr0 ov 2MHz/8 = 250KHz
+    TMR0 = 6; //start timer at 6, tmr0 will count 250 times before overflowing
+    INTCON &= (unsigned char)~0x04;     // clear T0IF (interupt flag)
     INTCON |= 0x20;                    // enable Timer0 interrupt
     INTCON |= 0x80;                    // enable global interrupt
 }
@@ -42,7 +42,7 @@ void my_delay_init(void)
     timer0_init_1ms_int();
 }
 
-// Our replacement for Delay_ms(): just wait using ms_ticks
+// wait using ms_ticks
 void my_delay(unsigned int ms_local)
 {
     unsigned long start = ms_ticks;
@@ -72,7 +72,7 @@ unsigned int read_adc(void)
 {
     ADCON0 |= 0x04;                 // start conversion
     while (ADCON0 & 0x04) { }       // wait until done
-    return ((unsigned int)ADRESH << 8) | (unsigned int)ADRESL;
+    return ((unsigned int)ADRESH << 8) | (unsigned int)ADRESL; // 0-1023 possible steps
 }
 
 // ---------------- Pins / masks ----------------
@@ -221,7 +221,7 @@ unsigned int tmr1_read_16(void)
     return ((unsigned int)h << 8) | (unsigned int)l;
 }
 
-void my_delay_us(unsigned int us_local)
+void my_delay_us(unsigned int us_local) //tmr1 used to create delays in micro seconds, needed for ultrasonic and servo
 {
     unsigned int start;
 
@@ -711,3 +711,4 @@ void main()
         }
     }
 }
+
