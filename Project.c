@@ -250,7 +250,7 @@ void my_delay_us(unsigned int us_local) //tmr1 used to create delays in micro se
 // We send around 100 frames so the servo has enough time to physically move
 void raise_servo_flag(void)
 {
-    unsigned int high_us = SERVO_HIGH_US;
+    unsigned int high_us = SERVO_HIGH_US; //defining pulse width
 
     for (servo_i = 0; servo_i < 100; servo_i++) {
         PORTC |= SERVO_MASK;                         // HIGH pulse
@@ -711,5 +711,6 @@ void main()
         }
     }
 }
+
 
 
