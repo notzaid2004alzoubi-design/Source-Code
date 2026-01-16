@@ -202,8 +202,8 @@ void CCPPWM_init(void)
 {
     CCP1CON = 0x0C;  // PWM mode
     CCP2CON = 0x0C;
-    PR2 = 250;       // PWM period
-    CCPR1L = 125;
+    PR2 = 250;       // PWM period timer2 counts till 250
+    CCPR1L = 125; //motor on for 50% of time
     CCPR2L = 125;
     T2CON  = 0x06;   // Timer2 ON, prescaler 1:16
 }
@@ -711,4 +711,5 @@ void main()
         }
     }
 }
+
 
